@@ -26,7 +26,6 @@ function Card({ card, image, title, likes, handleCardClick, handleDeleteCardClic
     await api.getUserCards().then(userCards => handleSetCards(userCards));
   };
 
-  const qweqw = 'asdsa';
   return (
     <div className='post'>
       {checkOwner()}
