@@ -8,7 +8,7 @@ import logo from '../images/logo.svg';
 import trashIcon from '../images/trash.svg';
 import likeButtonActived from '../images/union.png';
 import pen from '../images/pen.svg'
-import Api from './Api.js';
+import Api from './api.js';
 
 export { buttonAddIcon, closeIcon, buttonEditIcon, profileImage, likeButton, logo, trashIcon, likeButtonActived, pen };
 
