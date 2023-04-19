@@ -97,4 +97,7 @@ export default class Api {
     })
       .then((res) => this._checkTheApiResponse(res));
   }
+  dasd() {
+    console.log('sddssad')
+  }
 }
