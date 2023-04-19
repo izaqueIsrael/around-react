@@ -1,7 +1,7 @@
 import React from 'react';
 import PopupWithForm from './PopupWithForm';
 
-function DeletePostModal({ className, deleteIsOpen, setDeleteIsOpen, currentCard, apiUser, handleSetCards, handleDeleteCardClick }) {
+function DeletePostModal({ className, deleteIsOpen, setDeleteIsOpen, currentCard, handleSetCards, handleDeleteCardClick }) {
   const handleCloseModal = () => handleDeleteCardClick();
   const handleModalOnKeyDown = e => e.key === 'Escape' ? setDeleteIsOpen(false) : null;
 

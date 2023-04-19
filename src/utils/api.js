@@ -1,5 +1,4 @@
-import { apiUser } from './constants.js';
-export default class Api {
+class Api {
   constructor({ token, link }) {
     this.token = token;
     this.link = link;
@@ -61,7 +60,7 @@ export default class Api {
         authorization: this.token,
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ likes: [], link: `${newLink}`, name: `${newName}`, owner: apiUser.getUserInfo() })
+      body: JSON.stringify({ likes: [], link: `${newLink}`, name: `${newName}`, owner: api.getUserInfo() })
     })
       .then((res) => this._checkTheApiResponse(res));
   }
@@ -98,3 +97,7 @@ export default class Api {
       .then((res) => this._checkTheApiResponse(res));
   }
 }
+
+const api = new Api({ token: 'fd9c323e-e9d0-40a3-963c-a9bd242da440', link: 'https://around.nomoreparties.co/v1/web_ptbr_cohort_02' });
+
+export default api;

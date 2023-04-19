@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import closeButton from '../images/close.png';
-import { apiUser } from '../utils/constants';
+import api from '../utils/api';
 import useForm from '../hooks/UseForm';
 
 function PopupWithForm({ formType, className, children, title, buttonText, popupIsOpen, handleModalOnKeyDown, handleCloseModal, handleCurrentUser, handleSetCards, currentCard }) {
@@ -13,20 +13,20 @@ function PopupWithForm({ formType, className, children, title, buttonText, popup
   }
   useEffect(() => {
     if (typeof handleCurrentUser === 'function')
-      apiUser.getUserInfo().then(user => handleCurrentUser(user));
+      api.getUserInfo().then(user => handleCurrentUser(user));
     if (typeof handleSetCards === 'function')
-      apiUser.getUserCards().then(cards => handleSetCards(cards));
+      api.getUserCards().then(cards => handleSetCards(cards));
   }, [send]);
 
   const setInApi = async (formType) => {
     if (formType === 'avatar')
-      await apiUser.setUserAvatar(form.current.elements.avatar.value);
+      await api.setUserAvatar(form.current.elements.avatar.value);
     if (formType === 'profile')
-      await apiUser.setUserInfo({ newName: form.current.elements.name.value, newAbout: form.current.elements.status.value });
+      await api.setUserInfo({ newName: form.current.elements.name.value, newAbout: form.current.elements.status.value });
     if (formType === 'addCard')
-      await apiUser.updateCard({ newName: form.current.elements.title.value, newLink: form.current.elements.link.value });
+      await api.updateCard({ newName: form.current.elements.title.value, newLink: form.current.elements.link.value });
     if (formType === 'delete')
-      await apiUser.deleteCard(currentCard);
+      await api.deleteCard(currentCard);
   }
 
   return (

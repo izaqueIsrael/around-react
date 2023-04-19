@@ -2,9 +2,9 @@ import React, { useState, useContext, useEffect } from 'react';
 import trashIcon from '../images/trash.svg'
 import useCard from '../hooks/UseCard';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
-import { apiUser } from '../utils/constants';
+import api from '../utils/api';
 
-function Card({ card, image, title, likes, handleCardClick, handleDeleteCardClick, owner, like, setCards, handleDeleteCard, handleSetCards }) {
+function Card({ card, image, title, likes, handleCardClick, handleDeleteCardClick, owner, like, handleDeleteCard, handleSetCards }) {
   const currentUser = useContext(CurrentUserContext);
   const [isLiked, setIsLiked] = useState(like.some(i => i._id === currentUser._id));
   const { cardImage, cardText, deleteButton, likeButton } = useCard();
@@ -15,17 +15,19 @@ function Card({ card, image, title, likes, handleCardClick, handleDeleteCardClic
 
   const isLiking = async () => {
     setIsLiked(true);
-    await apiUser.addLike(card._id);
+    await api.addLike(card._id);
+    await api.getUserCards().then(userCards => handleSetCards(userCards));
   };
 
   const isDisliking = async () => {
     setIsLiked(false);
-    await apiUser.removeLike(card._id);
+    await api.removeLike(card._id);
+    await api.getUserCards().then(userCards => handleSetCards(userCards));
   };
 
-  useEffect(() => {
-    apiUser.getUserCards().then(userCards => handleSetCards(userCards));
-  }, [isLiked]);
+  // useEffect(() => {
+
+  // }, [isLiked, setIsLiked]);
 
   const handleDelete = () => (handleDeleteCardClick(), handleDeleteCard(card._id))
   return (

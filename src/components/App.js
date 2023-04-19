@@ -6,11 +6,9 @@ import AddPlacePopup from './AddPlacePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 import DeletePostModal from './DeletePostModal';
 import ImagePopup from './ImagePopup';
-import { apiUser } from '../utils/constants';
+import api from '../utils/api'
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import Footer from './Footer';
-
-//Saudações meu nobre corretor, só quero informar que fiz o código mirando no resultado da api, então dependendo de como a api está no momento as respostas podem demorar ou serem quase imediatas, como o like, exclusão, adição e edição
 
 function App() {
   // Current User
@@ -20,7 +18,7 @@ function App() {
   const handleSetCards = (cards) => setCards(cards);
 
   useEffect(() => {
-    Promise.all([apiUser.getUserInfo(), apiUser.getUserCards()])
+    Promise.all([api.getUserInfo(), api.getUserCards()])
       .then(([user, cards]) => {
         setCurrentUser(user);
         setCards(cards);
@@ -67,8 +65,7 @@ function App() {
         handleCardClick={handleCardClick}
         handleDeleteCardClick={handleDeleteCardClick}
         cards={cards}
-        apiUser={apiUser}
-        setCards={setCards}
+        api={api}
         handleDeleteCard={handleDeleteCard}
         handleSetCards={handleSetCards}
       />
@@ -104,7 +101,6 @@ function App() {
         deleteIsOpen={deleteIsOpen}
         setDeleteIsOpen={setDeleteIsOpen}
         currentCard={currentCard}
-        apiUser={apiUser}
         handleSetCards={handleSetCards}
         handleDeleteCardClick={handleDeleteCardClick}
       />
