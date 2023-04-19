@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import trashIcon from '../images/trash.svg'
 import useCard from '../hooks/UseCard';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
@@ -9,6 +9,7 @@ function Card({ card, image, title, likes, handleCardClick, handleDeleteCardClic
   const [isLiked, setIsLiked] = useState(like.some(i => i._id === currentUser._id));
   const { cardImage, cardText, deleteButton, likeButton } = useCard();
 
+  const handleDelete = () => (handleDeleteCardClick(), handleDeleteCard(card._id))
   const handleClick = () => handleCardClick(cardImage, cardText);
   const checkOwner = () => (owner._id !== currentUser._id && deleteButton.current) && deleteButton.current.remove();
   const handleCardLike = () => isLiked ? isDisliking() : isLiking();
@@ -25,11 +26,6 @@ function Card({ card, image, title, likes, handleCardClick, handleDeleteCardClic
     await api.getUserCards().then(userCards => handleSetCards(userCards));
   };
 
-  // useEffect(() => {
-
-  // }, [isLiked, setIsLiked]);
-
-  const handleDelete = () => (handleDeleteCardClick(), handleDeleteCard(card._id))
   return (
     <div className='post'>
       {checkOwner()}
