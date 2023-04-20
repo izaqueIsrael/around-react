@@ -5,7 +5,7 @@ import Card from './Card';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 
-function Main({ onEditProfileClick, onAddPlaceClick, onEditAvatarClick, handleCardClick, handleDeleteCardClick, cards, api, setCards, handleDeleteCard, handleSetCards }) {
+function Main({ onEditProfileClick, onAddPlaceClick, onEditAvatarClick, handleCardClick, handleDeleteCardClick, cards, handleDeleteCard, handleSetCards, liking, disliking }) {
   const currentUser = useContext(CurrentUserContext);
   return (
     <>
@@ -34,17 +34,12 @@ function Main({ onEditProfileClick, onAddPlaceClick, onEditAvatarClick, handleCa
           {Array.isArray(cards) && cards.map((card) => (<Card
             card={card}
             key={card._id}
-            image={card.link}
-            likes={card.likes.length}
-            title={card.name}
             handleCardClick={handleCardClick}
             handleDeleteCardClick={handleDeleteCardClick}
-            owner={card.owner}
-            like={card.likes}
-            api={api}
-            setCards={setCards}
             handleDeleteCard={handleDeleteCard}
             handleSetCards={handleSetCards}
+            liking={liking}
+            disliking={disliking}
           />))}
         </section>
       </main>

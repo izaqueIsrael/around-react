@@ -4,13 +4,20 @@ class Api {
     this.link = link;
   }
 
+  _checkTheApiResponse(res) {
+    if (!res.ok) {
+      return Promise.reject(`${res.status} error!`);
+    }
+    return res.json();
+  }
+
   getUserInfo() {
     return fetch(`${this.link}/users/me`, {
       headers: {
         authorization: this.token
       }
     })
-      .then(res => res.json());
+      .then((res) => this._checkTheApiResponse(res));
   }
 
   getUserCards() {
@@ -19,14 +26,7 @@ class Api {
         authorization: this.token
       }
     })
-      .then(res => res.json());
-  }
-
-  _checkTheApiResponse(res) {
-    if (!res.ok) {
-      return Promise.reject(`${res.status} error!`);
-    }
-    return res.json();
+      .then((res) => this._checkTheApiResponse(res));
   }
 
   setUserInfo({ newName, newAbout }) {

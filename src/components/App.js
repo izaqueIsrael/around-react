@@ -8,14 +8,14 @@ import DeletePostModal from './DeletePostModal';
 import ImagePopup from './ImagePopup';
 import api from '../utils/api'
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
+import useApp from '../hooks/UseApp';
 import Footer from './Footer';
 
 function App() {
   // Current User
-  const [currentUser, setCurrentUser] = useState({})
-  const [cards, setCards] = useState([]);
   const handleCurrentUser = (user) => setCurrentUser(user);
   const handleSetCards = (cards) => setCards(cards);
+  const { update, setUpdate, currentUser, setCurrentUser, cards, setCards, currentCard, setCurrentCard, editIsOpen, setEditIsOpen, addIsOpen, setAddIsOpen, avatarModalIsOpen, setAvatarModalIsOpen, deleteIsOpen, setDeleteIsOpen, imageModalIsOpen, setImageModalIsOpen } = useApp();
 
   useEffect(() => {
     Promise.all([api.getUserInfo(), api.getUserCards()])
@@ -24,29 +24,42 @@ function App() {
         setCards(cards);
       })
       .catch(err => err)
-  }, []);
+  }, [update]);
 
   // Edit Profile Modal Functions
-  const [editIsOpen, setEditIsOpen] = useState(false);
   const handleEditProfileClick = () => setEditIsOpen(!editIsOpen);
 
+  const editingProfile = async (newProfile) => {
+    await api.setUserInfo({ newName: newProfile.name.value, newAbout: newProfile.status.value });
+    setUpdate(!update);
+  }
+
   // Add Post Modal Functions
-  const [addIsOpen, setAddIsOpen] = useState(false);
   const handleAddPlaceClick = () => setAddIsOpen(!addIsOpen);
 
+  const addingCard = async (newCard) => {
+    await api.updateCard({ newName: newCard.title.value, newLink: newCard.link.value });
+    setUpdate(!update);
+  }
+
   // Change Avatar Modal Functions
-  const [avatarModalIsOpen, setAvatarModalIsOpen] = useState(false);
   const handleEditAvatarClick = () => setAvatarModalIsOpen(!avatarModalIsOpen);
 
-  // Delete Post Modal
-  const [deleteIsOpen, setDeleteIsOpen] = useState(false);
-  const handleDeleteCardClick = () => setDeleteIsOpen(!deleteIsOpen);
+  const changingAvatar = async (newAvatar) => {
+    await api.setUserAvatar(newAvatar.avatar.value);
+    setUpdate(!update);
+  }
 
-  const [currentCard, setCurrentCard] = useState();
-  const handleDeleteCard = (card) => setCurrentCard(card)
+  // Delete Post Modal
+  const handleDeleteCardClick = () => setDeleteIsOpen(!deleteIsOpen);
+  const handleDeleteCard = (card) => setCurrentCard(card);
+
+  const deletingCard = async (card) => {
+    await api.deleteCard(card);
+    setUpdate(!update);
+  }
 
   // Image Modal
-  const [imageModalIsOpen, setImageModalIsOpen] = useState(false);
   const handleCardClick = (cardImage, cardText) => {
     setImageModalIsOpen(!imageModalIsOpen);
     setSelectedCard({ link: cardImage.current.src, text: cardText.current.textContent });
@@ -54,6 +67,16 @@ function App() {
 
   // Card
   const [selectedCard, setSelectedCard] = useState({ text: '', link: '' });
+
+  const liking = async (like) => {
+    await api.addLike(like);
+    setUpdate(!update);
+  }
+
+  const disliking = async (dislike) => {
+    await api.removeLike(dislike);
+    setUpdate(!update);
+  }
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -65,15 +88,17 @@ function App() {
         handleCardClick={handleCardClick}
         handleDeleteCardClick={handleDeleteCardClick}
         cards={cards}
-        api={api}
         handleDeleteCard={handleDeleteCard}
         handleSetCards={handleSetCards}
+        liking={liking}
+        disliking={disliking}
       />
       <EditProfilePopup
         className={`${editIsOpen ? 'popup popup-image' : 'popup popup_closed popup-image'}`}
         editIsOpen={editIsOpen}
         setEditIsOpen={setEditIsOpen}
         handleCurrentUser={handleCurrentUser}
+        editingProfile={editingProfile}
       />
       <AddPlacePopup
         className={`${addIsOpen ? 'popup popup-image' : 'popup popup_closed popup-image'}`}
@@ -81,6 +106,7 @@ function App() {
         setAddIsOpen={setAddIsOpen}
         handleAddPlaceClick={handleAddPlaceClick}
         handleSetCards={handleSetCards}
+        addingCard={addingCard}
       />
       <EditAvatarPopup
         className={`${avatarModalIsOpen ? 'popup popup-image' : 'popup popup_closed popup-image'}`}
@@ -88,6 +114,7 @@ function App() {
         onEditAvatarClick={setAvatarModalIsOpen}
         handleEditAvatarClick={handleEditAvatarClick}
         handleCurrentUser={handleCurrentUser}
+        changingAvatar={changingAvatar}
       />
       <ImagePopup
         className={`${imageModalIsOpen ? 'popup popup-image' : 'popup popup_closed popup-image'}`}
@@ -103,6 +130,7 @@ function App() {
         currentCard={currentCard}
         handleSetCards={handleSetCards}
         handleDeleteCardClick={handleDeleteCardClick}
+        deletingCard={deletingCard}
       />
       <Footer />
     </CurrentUserContext.Provider>

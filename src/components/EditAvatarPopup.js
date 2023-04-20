@@ -1,13 +1,12 @@
 import React from 'react';
 import PopupWithForm from './PopupWithForm';
 
-function EditAvatarPopup({ className, avatarModalIsOpen, onEditAvatarClick, handleEditAvatarClick, handleCurrentUser }) {
+function EditAvatarPopup({ className, avatarModalIsOpen, onEditAvatarClick, handleEditAvatarClick, handleCurrentUser, changingAvatar }) {
   const handleCloseModal = () => handleEditAvatarClick();
   const handleModalOnKeyDown = e => e.key === 'Escape' ? onEditAvatarClick(false) : null;
 
   return (
     <PopupWithForm
-      formType={'avatar'}
       className={className}
       children={
         <div>
@@ -30,6 +29,7 @@ function EditAvatarPopup({ className, avatarModalIsOpen, onEditAvatarClick, hand
       handleCloseModal={handleCloseModal}
       handleModalOnKeyDown={handleModalOnKeyDown}
       handleCurrentUser={handleCurrentUser}
+      setterInApi={changingAvatar}
     />
   );
 }
