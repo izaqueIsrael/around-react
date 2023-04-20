@@ -11,7 +11,7 @@ function AddPlacePopup({ className, addIsOpen, setAddIsOpen, handleAddPlaceClick
       children={
         <>
           <div>
-            <input name='formTitle' className='form__input form__input_add form__title' id='title' min={2} max={30} type='text'
+            <input name='formTitle' className='form__input form__input_add form__title' id='title' minLength={2} maxLength={30} type='text'
               placeholder='Ti&#769;tulo' required />
             <label htmlFor='title' className='form__description form__description_error'></label>
           </div>

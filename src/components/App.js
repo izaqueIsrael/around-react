@@ -13,9 +13,9 @@ import Footer from './Footer';
 
 function App() {
   // Current User
+  const { update, setUpdate, currentUser, setCurrentUser, cards, setCards, currentCard, setCurrentCard, editIsOpen, setEditIsOpen, addIsOpen, setAddIsOpen, avatarModalIsOpen, setAvatarModalIsOpen, deleteIsOpen, setDeleteIsOpen, imageModalIsOpen, setImageModalIsOpen } = useApp();
   const handleCurrentUser = (user) => setCurrentUser(user);
   const handleSetCards = (cards) => setCards(cards);
-  const { update, setUpdate, currentUser, setCurrentUser, cards, setCards, currentCard, setCurrentCard, editIsOpen, setEditIsOpen, addIsOpen, setAddIsOpen, avatarModalIsOpen, setAvatarModalIsOpen, deleteIsOpen, setDeleteIsOpen, imageModalIsOpen, setImageModalIsOpen } = useApp();
 
   useEffect(() => {
     Promise.all([api.getUserInfo(), api.getUserCards()])
@@ -89,7 +89,6 @@ function App() {
         handleDeleteCardClick={handleDeleteCardClick}
         cards={cards}
         handleDeleteCard={handleDeleteCard}
-        handleSetCards={handleSetCards}
         liking={liking}
         disliking={disliking}
       />

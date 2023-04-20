@@ -13,7 +13,7 @@ function PopupWithForm({ formType, className, children, title, buttonText, popup
 
   return (
     <>
-      <div className={className} id='add__modal' tabIndex={0} onKeyDown={handleModalOnKeyDown} >
+      <div className={className} id='add__modal' tabIndex={0} onKeyDown={handleModalOnKeyDown}>
         <button className='button popup__close' id='add__close' onClick={handleCloseModal} >
           <img className='popup__icon' alt='close' src={closeButton} />
         </button>

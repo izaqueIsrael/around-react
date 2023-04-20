@@ -11,11 +11,11 @@ function EditProfilePopup({ className, editIsOpen, setEditIsOpen, setCurrentUser
       children={
         <>
           <div>
-            <input className='form__input form__name' name='formName' id='name' type='text' min={2} max={40} required placeholder='' />
+            <input className='form__input form__name' name='formName' id='name' type='text' minLength={2} maxLength={40} required placeholder='' />
             <label htmlFor='name' className='form__description form__description_error'></label>
           </div>
           <div>
-            <input className='form__input form__status' name='formDescription' id='status' type='text' min={2} max={200} required placeholder='' />
+            <input className='form__input form__status' name='formDescription' id='status' type='text' minLength={2} maxLength={200} required placeholder='' />
             <label htmlFor='status' className='form__description form__description_error'></label>
           </div>
         </>
